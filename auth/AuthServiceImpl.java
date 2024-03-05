@@ -31,7 +31,7 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
                         .socialSecurityNumber("2")
                         .phoneNumber("3")
                         .address("aaa")
-                        .job("bbb")
+                        .job(UtilServiceImpl.getInstance().createRandomJob())
                         .build()));
         return Messenger.SUCCESS;
     }

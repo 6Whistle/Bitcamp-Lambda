@@ -1,6 +1,7 @@
 import account.AccountView;
 import auth.AuthView;
 import board.BoardView;
+import crawler.CrawlerView;
 
 import java.util.Scanner;
 
@@ -17,6 +18,7 @@ public class Main {
 //                case "4":   KaupView.main();                break;
 //                case "5":   UserView.main(scan);            break;
                 case "6":   AccountView.main(scan);         break;
+                case "4":   CrawlerView.main(scan);         break;
                 default:    System.out.println("잘못된 입력입니다");
             }
 
