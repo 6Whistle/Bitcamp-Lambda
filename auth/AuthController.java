@@ -1,6 +1,8 @@
 package auth;
 
 
+import enums.Messenger;
+
 import java.util.Scanner;
 
 public class AuthController {
@@ -14,7 +16,7 @@ public class AuthController {
         System.out.println(auth.addUsers());
     }
 
-    public void join(Scanner scan) {
+    public Messenger join(Scanner scan) {
         System.out.println("=== 회원가입 ===");
         System.out.println("입력(ID, 비밀번호, 비빌번호 확인, 이름, 주민번호, 전화번호, 주소, 직업)");
         System.out.println(auth.save(Auth.builder()
@@ -27,15 +29,17 @@ public class AuthController {
                 .address(scan.next())
                 .job(scan.next())
                 .build()));
+        return Messenger.SUCCESS;
     }
 
-    public void login(Scanner scan) {
+    public Messenger login(Scanner scan) {
         System.out.println("=== 로그인 ===");
         System.out.println("입력(ID, 비밀번호)");
-        System.out.println(auth.login(Auth.builder()
+        return auth.login(Auth.builder()
                 .username(scan.next())
                 .password(scan.next())
-                .build()));
+                .build());
+
     }
 
     public void findUserByID(Scanner scan) {
@@ -44,22 +48,21 @@ public class AuthController {
         System.out.println(auth.getOne(scan.next()).toString());
     }
 
-    public void updatePassword(Scanner scan) {
+    public Messenger updatePassword(Scanner scan) {
         System.out.println("=== 비번 변경 ===");
         System.out.println("입력(ID, 비번)");
-        System.out.println(auth.updatePassword(Auth.builder()
+        return auth.updatePassword(Auth.builder()
                 .username(scan.next())
                 .password(scan.next())
-                .build()));
+                .build());
     }
 
-    public void deleteUser(Scanner scan) {
+    public Messenger deleteUser(Scanner scan) {
         System.out.println("=== 탈퇴 ===");
         System.out.println("입력(ID)");
-        auth.delete(Auth.builder()
+        return auth.delete(Auth.builder()
                 .username(scan.next())
                 .build());
-        System.out.println();
     }
 
     public void getUsersMap() {
@@ -70,14 +73,13 @@ public class AuthController {
     public void findUsersByName(Scanner scan) {
         System.out.println("=== 이름 검색 ===");
         System.out.println("입력(이름)");
-        System.out.println(auth.findUsersByName(scan.next()).toString());
+        auth.findUsersByName(scan.next()).forEach(System.out::println);
     }
 
     public void findUsersByJob(Scanner scan) {
         System.out.println("=== 직업 검색 ===");
         System.out.println("입력(직업)");
-        System.out.println(auth.findUsersByJob(scan.next()).toString());
-
+        auth.findUsersByJob(scan.next()).forEach(System.out::println);
     }
 
     public void countUsers() {

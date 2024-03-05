@@ -3,6 +3,7 @@ package account;
 
 import common.UtilService;
 import common.UtilServiceImpl;
+import enums.Messenger;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ public class AccountController {
         utilService = UtilServiceImpl.getInstance();
     }
 
-    public String creatAccount(Scanner scan) {
+    public Messenger creatAccount(Scanner scan) {
         System.out.println("=== Create Account ===");
         System.out.println("Input(Account Number, Depositor)");
         return accountService.save(Account.builder()
@@ -62,7 +63,7 @@ public class AccountController {
                 .build());
     }
 
-    public String deleteAccount(Scanner scan) {
+    public Messenger deleteAccount(Scanner scan) {
         System.out.println("=== Get Balance ===");
         System.out.println("Input(Account Number)");
         return accountService.delete(Account.builder()

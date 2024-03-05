@@ -1,12 +1,13 @@
 package auth;
 
 import common.AbstractService;
-import common.UtilService;
 import common.UtilServiceImpl;
+import enums.Messenger;
 import lombok.Getter;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AuthServiceImpl extends AbstractService<Auth> implements AuthService {
     @Getter
@@ -19,37 +20,35 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
     }
 
     @Override
-    public String addUsers() {
-        UtilService util = UtilServiceImpl.getInstance();
-        while (users.size() < 5) {
-            String username = util.createRandomUsername();
-            users.put(username, Auth.builder()
-                    .username(username)
-                    .password("1")
-                    .passwordConfirm("1")
-                    .name(util.createRandomName())
-                    .socialSecurityNumber("2")
-                    .phoneNumber("3")
-                    .address("aaa")
-                    .job("bbb")
-                    .build());
-        }
-        return "5명이 추가됬습니다.";
+    public Messenger addUsers() {
+        IntStream.range(0, 5)
+                .mapToObj(i -> UtilServiceImpl.getInstance().createRandomUsername())
+                .forEach(i -> users.put(i, Auth.builder()
+                        .username(i)
+                        .password("1")
+                        .passwordConfirm("1")
+                        .name(UtilServiceImpl.getInstance().createRandomName())
+                        .socialSecurityNumber("2")
+                        .phoneNumber("3")
+                        .address("aaa")
+                        .job("bbb")
+                        .build()));
+        return Messenger.SUCCESS;
     }
 
     @Override
-    public String login(Auth user) {
+    public Messenger login(Auth user) {
         return users.getOrDefault(user.getUsername(), Auth.builder().password("").build())
                 .getPassword()
                 .equals(user.getPassword()) ?
-                "로그인 성공" : "로그인 실패";
+                Messenger.SUCCESS : Messenger.FAIL;
     }
 
     @Override
-    public String updatePassword(Auth user) {
+    public Messenger updatePassword(Auth user) {
         users.getOrDefault(user.getUsername(), Auth.builder().password("").build())
                 .setPassword(user.getPassword());
-        return "비밀번호 변경 성공";
+        return Messenger.SUCCESS;
     }
 
     @Override
@@ -59,7 +58,7 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
 
     @Override
     public List<?> findUsersByName(String name) {
-        return users.values().stream().filter(i->i.getName().equals(name)).toList();
+        return users.values().stream().filter(i -> i.getName().equals(name)).toList();
     }
 
     @Override
@@ -71,7 +70,7 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
 
     @Override
     public List<?> findUsersByJob(String job) {
-        return users.values().stream().filter(i->i.getJob().equals(job)).toList();
+        return users.values().stream().filter(i -> i.getJob().equals(job)).toList();
     }
 
     @Override
@@ -82,20 +81,20 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
     }
 
     @Override
-    public String save(Auth user) {
+    public Messenger save(Auth user) {
         users.put(user.getUsername(), user);
-        return "회원가입 성공";
+        return Messenger.SUCCESS;
     }
 
     @Override
-    public String delete(Auth user) {
-        return Objects.isNull(users.remove(user.getUsername())) ? "실패" : "성공";
+    public Messenger delete(Auth user) {
+        return Objects.isNull(users.remove(user.getUsername())) ? Messenger.FAIL : Messenger.SUCCESS;
     }
 
     @Override
-    public String deleteAll() {
+    public Messenger deleteAll() {
         users.clear();
-        return "전체 삭제 성공";
+        return Messenger.SUCCESS;
     }
 
     @Override
@@ -105,7 +104,9 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
 
     @Override
     public Optional<Auth> findById(Long id) {
-        return Optional.empty();
+        return users.values().stream()
+                .filter(i -> i.getId().equals(id))
+                .findAny();
     }
 
     @Override
@@ -121,6 +122,6 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
     @Override
     public Boolean existsById(Long id) {
         return users.values().stream()
-                .anyMatch(i->i.getId().equals(id));
+                .anyMatch(i -> i.getId().equals(id));
     }
 }

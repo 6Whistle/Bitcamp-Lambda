@@ -1,6 +1,7 @@
 package account;
 
 import common.AbstractService;
+import enums.Messenger;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -53,20 +54,21 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
 
 
     @Override
-    public String save(Account account) {
+    public Messenger save(Account account) {
         accountDTOList.add(account);
-        return "Account creation success";
+        return Messenger.SUCCESS;
     }
 
     @Override
-    public String delete(Account account) {
+    public Messenger delete(Account account) {
         return accountDTOList.removeIf(i -> i.getAccountNumber().equals(account.getAccountNumber())) ?
-                "Your Account was deleted" : "We can't find your account";
+                Messenger.SUCCESS : Messenger.FAIL;
     }
 
     @Override
-    public String deleteAll() {
-        return null;
+    public Messenger deleteAll() {
+        accountDTOList.clear();
+        return Messenger.SUCCESS;
     }
 
     @Override
