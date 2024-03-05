@@ -4,7 +4,7 @@ package auth;
 import java.util.Scanner;
 
 public class AuthController {
-    AuthService auth;
+    AuthServiceImpl auth;
 
     public AuthController() {
         this.auth = AuthServiceImpl.getInstance();
@@ -17,7 +17,7 @@ public class AuthController {
     public void join(Scanner scan) {
         System.out.println("=== 회원가입 ===");
         System.out.println("입력(ID, 비밀번호, 비빌번호 확인, 이름, 주민번호, 전화번호, 주소, 직업)");
-        System.out.println(auth.join(User.builder()
+        System.out.println(auth.save(Auth.builder()
                 .username(scan.next())
                 .password(scan.next())
                 .passwordConfirm(scan.next())
@@ -32,7 +32,7 @@ public class AuthController {
     public void login(Scanner scan) {
         System.out.println("=== 로그인 ===");
         System.out.println("입력(ID, 비밀번호)");
-        System.out.println(auth.login(User.builder()
+        System.out.println(auth.login(Auth.builder()
                 .username(scan.next())
                 .password(scan.next())
                 .build()));
@@ -41,13 +41,13 @@ public class AuthController {
     public void findUserByID(Scanner scan) {
         System.out.println("=== ID 검색 ===");
         System.out.println("입력(ID)");
-        System.out.println(auth.findUserByID(scan.next()));
+        System.out.println(auth.getOne(scan.next()).toString());
     }
 
     public void updatePassword(Scanner scan) {
         System.out.println("=== 비번 변경 ===");
         System.out.println("입력(ID, 비번)");
-        System.out.println(auth.updatePassword(User.builder()
+        System.out.println(auth.updatePassword(Auth.builder()
                 .username(scan.next())
                 .password(scan.next())
                 .build()));
@@ -56,7 +56,10 @@ public class AuthController {
     public void deleteUser(Scanner scan) {
         System.out.println("=== 탈퇴 ===");
         System.out.println("입력(ID)");
-        System.out.println(auth.deleteUser(scan.next()));
+        auth.delete(Auth.builder()
+                .username(scan.next())
+                .build());
+        System.out.println();
     }
 
     public void getUsersMap() {
@@ -79,6 +82,6 @@ public class AuthController {
 
     public void countUsers() {
         System.out.println("=== 회원수 ===");
-        System.out.println(auth.countUsers());
+        System.out.println(auth.count());
     }
 }

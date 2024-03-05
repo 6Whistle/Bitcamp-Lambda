@@ -8,14 +8,14 @@ import java.util.Date;
 @Getter
 @ToString(exclude = "id")
 public class Account {
-    private long id;
+    private Long id;
     private String accountNumber;
     private String accountHolder;
-    private double balance;
+    private Double balance;
     private Date transactionDate;
 
     @Builder(builderMethodName = "builder")
-    public Account(long id, String accountNumber, String accountHolder, double balance, Date transactionDate){
+    public Account(Long id, String accountNumber, String accountHolder, Double balance, Date transactionDate){
         this.id = id;
         this.accountNumber = accountNumber;
         this.accountHolder = accountHolder;

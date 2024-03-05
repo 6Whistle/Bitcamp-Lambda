@@ -6,6 +6,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class AccountServiceImpl extends AbstractService<Account> implements AccountService {
     @Getter
@@ -17,16 +18,6 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
         accountDTOList = new ArrayList<>();
     }
 
-    @Override
-    public String creatAccount(Account account) {
-        accountDTOList.add(account);
-        return "Account creation success";
-    }
-
-    @Override
-    public List<?> getAccountsList() {
-        return new ArrayList<>(accountDTOList);
-    }
 
     @Override
     public String withdraw(Account account) {
@@ -60,17 +51,48 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
                 .orElse("We can't find your account");
     }
 
+
     @Override
-    public String deleteAccount(Account account) {
+    public String save(Account account) {
+        accountDTOList.add(account);
+        return "Account creation success";
+    }
+
+    @Override
+    public String delete(Account account) {
         return accountDTOList.removeIf(i -> i.getAccountNumber().equals(account.getAccountNumber())) ?
                 "Your Account was deleted" : "We can't find your account";
     }
 
     @Override
-    public String findAccount(Account account) {
+    public String deleteAll() {
+        return null;
+    }
+
+    @Override
+    public List<Account> findAll() {
+        return new ArrayList<>(accountDTOList);
+    }
+
+    @Override
+    public Optional<Account> findById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Long count() {
+        return (long) accountDTOList.size();
+    }
+
+    @Override
+    public Optional<Account> getOne(String id) {
         return accountDTOList.stream()
-                .filter(i -> i.getAccountNumber().equals(account.getAccountNumber()))
-                .map(Account::toString)
-                .findAny().orElse("We can't find your account");
+                .filter(i -> i.getAccountNumber().equals(id))
+                .findAny();
+    }
+
+    @Override
+    public Boolean existsById(Long id) {
+        return null;
     }
 }

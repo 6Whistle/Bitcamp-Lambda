@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AccountController {
-    private final AccountService accountService;
+    private final AccountServiceImpl accountService;
     private final UtilService utilService;
 
     public AccountController(){
@@ -20,8 +20,8 @@ public class AccountController {
     public String creatAccount(Scanner scan) {
         System.out.println("=== Create Account ===");
         System.out.println("Input(Account Number, Depositor)");
-        return accountService.creatAccount(Account.builder()
-                .id(utilService.createRandomInt(1, 100))
+        return accountService.save(Account.builder()
+                .id((long) utilService.createRandomInt(1, 100))
                 .accountNumber(scan.next())
                 .accountHolder(scan.next())
                 .balance(0.0)
@@ -31,7 +31,7 @@ public class AccountController {
 
     public String getAccountsList() {
         System.out.println("== Account List ===");
-        List<?> list = accountService.getAccountsList();
+        List<?> list = accountService.findAll();
         list.forEach(System.out::println);
         return "------------------";
     }
@@ -65,7 +65,7 @@ public class AccountController {
     public String deleteAccount(Scanner scan) {
         System.out.println("=== Get Balance ===");
         System.out.println("Input(Account Number)");
-        return accountService.deleteAccount(Account.builder()
+        return accountService.delete(Account.builder()
                 .accountNumber(scan.next())
                 .build());
     }
@@ -73,8 +73,8 @@ public class AccountController {
     public String findAccount(Scanner scan) {
         System.out.println("=== Get Balance ===");
         System.out.println("Input(Account Number)");
-        return accountService.findAccount(Account.builder()
-                .accountNumber(scan.next())
-                .build());
+        return accountService.getOne(scan.next())
+                .orElse(new Account())
+                .toString();
     }
 }
