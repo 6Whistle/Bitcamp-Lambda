@@ -63,6 +63,7 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
 
     @Override
     public Map<String, ?> findUsersByNameToMap(String name) {
+
         return users.entrySet().stream()
                 .filter(i -> i.getValue().getName().equals(name))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
