@@ -2,6 +2,7 @@ package auth;
 
 import enums.Messenger;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,4 +15,7 @@ public interface AuthService {
     List<?> findUsersByJob(String job);
     Map<String, ?> findUsersByJobToMap(String job);
     Map<String, ?> getUserMap();
+    String test();
+
+    List<?> findUsers() throws SQLException;
 }

@@ -5,6 +5,7 @@ import common.UtilServiceImpl;
 import enums.Messenger;
 import lombok.Getter;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,7 +13,7 @@ import java.util.stream.IntStream;
 public class AuthServiceImpl extends AbstractService<Auth> implements AuthService {
     @Getter
     private static final AuthServiceImpl instance = new AuthServiceImpl();
-
+    private static final AuthRepository authRepository = AuthRepository.getInstance();
     private final Map<String, Auth> users;
 
     private AuthServiceImpl() {
@@ -116,13 +117,23 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
     }
 
     @Override
-    public Optional<Auth> getOne(String id) {
-        return Optional.of(users.get(id));
+    public Optional<Auth> getOne(String id) throws SQLException {
+        return Optional.ofNullable(users.get(id));
     }
 
     @Override
     public Boolean existsById(Long id) {
         return users.values().stream()
                 .anyMatch(i -> i.getId().equals(id));
+    }
+
+    @Override
+    public String test() {
+        return authRepository.test();
+    }
+
+    @Override
+    public List<?> findUsers() throws SQLException {
+        return authRepository.findUsers();
     }
 }

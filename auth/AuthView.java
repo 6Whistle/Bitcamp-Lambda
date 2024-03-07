@@ -1,9 +1,10 @@
 package auth;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AuthView {
-    public static void main(Scanner scan) {
+    public static void main(Scanner scan) throws SQLException {
         AuthController controller = new AuthController();
         controller.addUsers();
 
@@ -14,10 +15,14 @@ public class AuthView {
                 case "0" : System.out.println("종료");           return;
                 case "1" : controller.join(scan);               break;
                 case "2" : controller.login(scan);              break;
-                case "3" : controller.findUserByID(scan);       break;
+                case "3" : controller.getOne(scan);             break;
                 case "4" : controller.updatePassword(scan);     break;
                 case "5" : controller.deleteUser(scan);         break;
-                case "6" : controller.getUsersMap();            break;
+                case "6" :
+//                    controller.getUsersMap();
+//                    System.out.println(controller.test());
+                    controller.findUsers().forEach(System.out::println);
+                    break;
                 case "7" : controller.findUsersByName(scan);    break;
                 case "8" : controller.findUsersByJob(scan);     break;
                 case "9" : controller.countUsers();             break;

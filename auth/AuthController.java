@@ -3,6 +3,8 @@ package auth;
 
 import enums.Messenger;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class AuthController {
@@ -42,10 +44,11 @@ public class AuthController {
 
     }
 
-    public void findUserByID(Scanner scan) {
+    public void findUserByID(Scanner scan) throws SQLException {
         System.out.println("=== ID 검색 ===");
         System.out.println("입력(ID)");
-        System.out.println(auth.getOne(scan.next()).toString());
+        System.out.println(auth.getOne(scan.next())
+                .orElse(Auth.builder().build()).toString());
     }
 
     public Messenger updatePassword(Scanner scan) {
@@ -86,5 +89,21 @@ public class AuthController {
     public void countUsers() {
         System.out.println("=== 회원수 ===");
         System.out.println(auth.count());
+    }
+
+    public void getOne(Scanner scan) throws SQLException {
+        System.out.println("=== ID 검색 ===");
+        System.out.println(auth.getOne(scan.next())
+                .orElse(Auth.builder().build())
+                .toString());
+    }
+
+    public String test() {
+        System.out.println("=== 회원 정보 ===");
+        return auth.test();
+    }
+
+    public List<?> findUsers() throws SQLException {
+        return auth.findUsers();
     }
 }
