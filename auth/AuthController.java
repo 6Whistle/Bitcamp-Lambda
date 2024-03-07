@@ -57,6 +57,7 @@ public class AuthController {
                 .build());
     }
 
+
     public Messenger deleteUser(Scanner scan) {
         System.out.println("=== 탈퇴 ===");
         System.out.println("입력(ID)");
