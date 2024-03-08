@@ -3,6 +3,8 @@ package post;
 import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Getter
 @ToString
 public class Post {
@@ -10,12 +12,5 @@ public class Post {
     private String title;
     private String content;
     private String writer;
-
-    @Builder
-    public Post(Long id, String title, String content, String writer){
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.writer = writer;
-    }
+    private String registerDate;
 }

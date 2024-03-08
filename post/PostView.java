@@ -15,7 +15,7 @@ public class PostView {
                     return;
                 case "1":
                     System.out.println("=== Board ===");
-                    controller.getPostList().forEach(System.out::println);
+                    controller.findAll().forEach(System.out::println);
                     break;
                 default:
                     System.out.println("Wrong Input");

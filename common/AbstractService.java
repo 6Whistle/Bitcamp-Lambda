@@ -10,7 +10,7 @@ public abstract class AbstractService<T> {
     public abstract Messenger save(T t);
     public abstract Messenger delete(T t);
     public abstract Messenger deleteAll();
-    public abstract List<T> findAll();
+    public abstract List<T> findAll() throws SQLException;
     public abstract Optional<T> findById(Long id);
     public abstract Long count();
     public abstract Optional<T> getOne(String id) throws SQLException;

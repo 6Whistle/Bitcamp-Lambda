@@ -1,5 +1,5 @@
 package enums;
 
 public enum Messenger {
-    SUCCESS, FAIL
+    SUCCESS, FAIL, SQL_ERROR
 }

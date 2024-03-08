@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PostRepository {
     @Getter
@@ -18,30 +19,33 @@ public class PostRepository {
         }
     }
 
-    private Connection connection;
+    private final Connection conn;
 
     private PostRepository() throws SQLException {
-        connection = DriverManager.getConnection(
+        conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/erichgammadb",
                 "erichgamma",
-                "erichgammadb"
-        );
+                "erichgammadb");
     }
 
-    public List<?> getPostList() throws SQLException {
+    public List<Post> findAll() throws SQLException{
         String sql = "SELECT * FROM posts";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        List<String> list = new ArrayList<>();
-        if(resultSet.next())
-            do list.add("ID : " + resultSet.getInt(1) +
-                    ", TITLE : " + resultSet.getString(2) +
-                    ", CONTENT : " + resultSet.getString(3) +
-                    ", WRITER : " + resultSet.getString(4));
-            while(resultSet.next());
-        else    list.add("NO DATA");
-        resultSet.close();
-        preparedStatement.close();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        List<Post> list = new ArrayList<>();
+
+        if(rs.next())
+            do list.add(Post.builder()
+                    .id((long) rs.getInt(1))
+                    .title(rs.getString(2))
+                    .content(rs.getString(3))
+                    .writer(rs.getString(4))
+                    .registerDate(rs.getString(5))
+                    .build());
+            while(rs.next());
+        else    list.add(Post.builder().build());
+        rs.close();
+        pstmt.close();
         return list;
     }
 }
