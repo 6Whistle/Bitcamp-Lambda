@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class UserController {
-    private static UserServiceImpl userService = UserServiceImpl.getInstance();
+    private static UserService userService = UserServiceImpl.getInstance();
     public List<?> findAll(){
         return userService.findAll();
     }
@@ -23,7 +23,7 @@ public class UserController {
 
     public Messenger join(Scanner scan) {
         System.out.println("[INPUT] ID PW Name Phone Job Height Weight");
-        User user = User.builder()
+        return userService.join(User.builder()
                 .username(scan.next())
                 .password(scan.next())
                 .name(scan.next())
@@ -31,10 +31,7 @@ public class UserController {
                 .job(scan.next())
                 .height(Double.parseDouble(scan.next()))
                 .weight(Double.parseDouble(scan.next()))
-                .build();
-        return userService.userexistsByUsername(user.getUsername()) == Messenger.FAIL
-                ? userService.save(user)
-                : Messenger.FAIL;
+                .build());
     }
 
     public Messenger login(Scanner scan) {

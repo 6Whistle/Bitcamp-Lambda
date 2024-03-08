@@ -7,7 +7,9 @@ public interface UserService {
 
     Messenger removeTable();
 
-    Messenger userexistsByUsername(String username);
+    Messenger userExistsByUsername(String username);
 
     Messenger login(User user);
+
+    Messenger join(User user);
 }

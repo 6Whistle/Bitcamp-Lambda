@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class UserRepository {
     @Getter
@@ -89,7 +90,7 @@ public class UserRepository {
     }
 
 
-    public Messenger userexistsByUsername(String username) {
+    public Messenger userExistsByUsername(String username) {
         String sql = "SELECT username FROM users WHERE username=?";
         Messenger msg;
         try{

@@ -67,13 +67,22 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         return userRepository.removeTable();
     }
 
+
     @Override
-    public Messenger userexistsByUsername(String username) {
-        return userRepository.userexistsByUsername(username);
+    public Messenger userExistsByUsername(String username) {
+        return userRepository.userExistsByUsername(username);
+    }
+
+    @Override
+    public Messenger join(User user) {
+        return userRepository.userExistsByUsername(user.getUsername()) == Messenger.FAIL
+                ? userRepository.save(user)
+                : Messenger.FAIL;
     }
 
     @Override
     public Messenger login(User user) {
         return userRepository.login(user);
     }
+
 }
