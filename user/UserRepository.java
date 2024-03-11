@@ -6,8 +6,6 @@ import lombok.Getter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class UserRepository {
     @Getter
@@ -22,20 +20,24 @@ public class UserRepository {
     }
 
     private Connection conn;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
 
     private UserRepository() throws SQLException {
         conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/erichgammadb",
                 "erichgamma",
                 "erichgammadb");
+        pstmt = null;
+        rs = null;
     }
 
     public List<User> findAll(){
         String sql = "SELECT * FROM users";
         List<User> list = new ArrayList<>();
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             if (rs.next())
                 do list.add(User.builder()
                         .username(rs.getString(2))
@@ -48,8 +50,6 @@ public class UserRepository {
                         .build());
                 while (rs.next());
             else System.out.println("No Data");;
-            pstmt.close();
-            rs.close();
         } catch (SQLException e){
             System.out.println("SQL Exception Occurred");
         }
@@ -68,9 +68,8 @@ public class UserRepository {
                 "                       weight VARCHAR(20)" +
                 "   )";
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
-            pstmt.close();
             return Messenger.SUCCESS;
         } catch (SQLException e) {
             return Messenger.FAIL;
@@ -80,9 +79,8 @@ public class UserRepository {
     public Messenger removeTable(){
         String sql = "DROP TABLE users";
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.execute();
-            pstmt.close();
             return Messenger.SUCCESS;
         } catch (SQLException e) {
             return Messenger.FAIL;
@@ -93,13 +91,10 @@ public class UserRepository {
     public Messenger userExistsByUsername(String username) {
         String sql = "SELECT username FROM users WHERE username=?";
         try{
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
-            ResultSet rs = pstmt.executeQuery();
-            Messenger msg = rs.next() ? Messenger.SUCCESS : Messenger.FAIL;
-            rs.close();
-            pstmt.close();
-            return msg;
+            rs = pstmt.executeQuery();
+            return rs.next() ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e){
             System.out.println("SQL Exception Occurred In userexistsByUsername()");
             return Messenger.SQL_ERROR;
@@ -109,9 +104,9 @@ public class UserRepository {
     public Messenger save(User user) {
         String sql = "INSERT INTO users(username, password, name, phone, job, height, weight) " +
                      "VALUES(?, ?, ?, ?, ?, ?, ?)";
-        Messenger msg;
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getName());
@@ -120,7 +115,6 @@ public class UserRepository {
             pstmt.setString(6, String.valueOf(user.getHeight()));
             pstmt.setString(7, String.valueOf(user.getWeight()));
             pstmt.executeUpdate();
-            pstmt.close();
             return Messenger.SUCCESS;
         } catch (SQLException e){
             return Messenger.SQL_ERROR;
@@ -129,18 +123,14 @@ public class UserRepository {
 
     public Messenger login(User user) {
         String sql = "SELECT username FROM users WHERE username=? AND password=?";
-        Messenger msg;
         try{
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
-            ResultSet rs = pstmt.executeQuery();
-            msg = rs.next() ? Messenger.SUCCESS : Messenger.FAIL;
-            rs.close();
-            pstmt.close();
+            rs = pstmt.executeQuery();
+            return rs.next() ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e){
-            msg = Messenger.SQL_ERROR;
+            return Messenger.SQL_ERROR;
         }
-        return msg;
     }
 }
