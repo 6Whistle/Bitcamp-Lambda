@@ -106,7 +106,7 @@ public class UserRepository {
                      "VALUES(?, ?, ?, ?, ?, ?, ?)";
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.
+
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getName());
