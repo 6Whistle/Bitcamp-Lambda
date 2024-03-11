@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class UserController {
-    private static UserService userService = UserServiceImpl.getInstance();
+    private static UserServiceImpl userService = UserServiceImpl.getInstance();
     public List<?> findAll(){
         return userService.findAll();
     }
