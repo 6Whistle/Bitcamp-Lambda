@@ -59,12 +59,16 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public Messenger makeTable(){
-        return userRepository.makeTable();
+        return !userRepository.checkUsersTable()
+                ? userRepository.makeTable()
+                : Messenger.FAIL;
     }
 
     @Override
     public Messenger removeTable(){
-        return userRepository.removeTable();
+        return userRepository.checkUsersTable()
+                ? userRepository.removeTable()
+                : Messenger.FAIL;
     }
 
 

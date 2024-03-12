@@ -1,6 +1,7 @@
 package com.erichgamma.api.user;
 
 import com.erichgamma.api.enums.Messenger;
+import lombok.Getter;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -8,7 +9,14 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class UserController {
-    private static UserServiceImpl userService = UserServiceImpl.getInstance();
+
+    @Getter
+    private static final UserController instance = new UserController();
+    private final UserServiceImpl userService;
+
+    private UserController(){
+        userService = UserServiceImpl.getInstance();
+    }
     public List<?> findAll(){
         return userService.findAll();
     }

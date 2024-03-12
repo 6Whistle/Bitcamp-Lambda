@@ -63,11 +63,9 @@ public enum Navigation {
     }
 
     public static Boolean navigate(Scanner scan){
-        System.out.println("x-Exit, auth-Auth, account-Account, crawler-Crawler, post-Post, user-User");
+        System.out.println("exit-Exit, auth-Auth, account-Account, crawler-Crawler, post-Post, user-User");
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(NAVIGATION_ERROR).predicate.test(scan);
     }
-
-
 }

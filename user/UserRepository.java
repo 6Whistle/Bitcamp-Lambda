@@ -56,8 +56,20 @@ public class UserRepository {
         return list;
     }
 
+    public Boolean checkUsersTable(){
+        String sql = "SHOW TABLES LIKE 'users'";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e){
+            System.err.println("SQL Exception Occurred in checkUserTable");
+            return false;
+        }
+    }
+
     public Messenger makeTable(){
-        String sql = "CREATE TABLE users (" +
+        String sql = "CREATE TABLE IF NOT EXISTS users (" +
                 "                       id INT AUTO_INCREMENT PRIMARY KEY," +
                 "                       username VARCHAR(20) NOT NULL," +
                 "                       password VARCHAR(20) NOT NULL," +
@@ -69,21 +81,21 @@ public class UserRepository {
                 "   )";
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.executeUpdate();
-            return Messenger.SUCCESS;
+            return pstmt.executeUpdate() >= 0 ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e) {
-            return Messenger.FAIL;
+            System.err.println("SQL Exception Occurred");
+            return Messenger.SQL_ERROR;
         }
     }
 
     public Messenger removeTable(){
-        String sql = "DROP TABLE users";
+        String sql = "DROP TABLE IF EXISTS users";
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.execute();
-            return Messenger.SUCCESS;
+            return pstmt.executeUpdate() >= 0 ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e) {
-            return Messenger.FAIL;
+            System.err.println("SQL Exception Occurred");
+            return Messenger.SQL_ERROR;
         }
     }
 
@@ -96,7 +108,7 @@ public class UserRepository {
             rs = pstmt.executeQuery();
             return rs.next() ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e){
-            System.out.println("SQL Exception Occurred In userexistsByUsername()");
+            System.err.println("SQL Exception Occurred");
             return Messenger.SQL_ERROR;
         }
     }
@@ -113,9 +125,10 @@ public class UserRepository {
             pstmt.setString(5, user.getJob());
             pstmt.setString(6, String.valueOf(user.getHeight()));
             pstmt.setString(7, String.valueOf(user.getWeight()));
-            pstmt.executeUpdate();
-            return Messenger.SUCCESS;
+
+            return pstmt.executeUpdate() >= 0 ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e){
+            System.err.println("SQL Exception Occurred");
             return Messenger.SQL_ERROR;
         }
     }
@@ -129,6 +142,7 @@ public class UserRepository {
             rs = pstmt.executeQuery();
             return rs.next() ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e){
+            System.err.println("SQL Exception Occurred");
             return Messenger.SQL_ERROR;
         }
     }
