@@ -2,7 +2,6 @@ package com.erichgamma.api.crawler;
 
 import lombok.Getter;
 
-import java.io.IOException;
 import java.util.Map;
 
 public class CrawlerServiceImpl implements CrawlerService {
@@ -16,7 +15,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
 
     @Override
-    public Map<String, ?> findNamesFromWeb(Map<String, String> paramMap) throws IOException{
+    public Map<String, ?> findNamesFromWeb(Map<String, String> paramMap){
         return crawlerRepository.save(paramMap);
     }
 }

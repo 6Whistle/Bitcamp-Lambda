@@ -27,27 +27,15 @@ public enum NavigationOfSup {
         return true;
     }),
     CRAWLER("crawler", () -> {
-        try {
-            CrawlerView.main(getSCANNER());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        CrawlerView.main(getSCANNER());
         return true;
     }),
     POSTS("posts", () -> {
-        try {
-            PostView.main(getSCANNER());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        PostView.main(getSCANNER());
         return true;
     }),
     AUTH("auth", () -> {
-        try {
-            AuthView.main(getSCANNER());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        AuthView.main(getSCANNER());
         return true;
     }),
     NAVIGATION_ERROR("navigation_error", () -> {
@@ -66,7 +54,7 @@ public enum NavigationOfSup {
     }
 
     public static Boolean navigate(){
-        System.out.println("exit-Exit, auth-Auth, account-Account, crawler-Crawler, post-Post, user-User");
+        System.out.println("exit-Exit, auth-Auth, account-Account, crawler-Crawler, posts-Post, user-User");
         String str = getSCANNER().next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(NAVIGATION_ERROR).supplier.get();

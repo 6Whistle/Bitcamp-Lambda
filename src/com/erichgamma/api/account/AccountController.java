@@ -4,16 +4,19 @@ package com.erichgamma.api.account;
 import com.erichgamma.api.common.UtilService;
 import com.erichgamma.api.common.UtilServiceImpl;
 import com.erichgamma.api.enums.Messenger;
+import lombok.Getter;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class AccountController {
+    @Getter
+    private final static AccountController instance = new AccountController();
     private final AccountServiceImpl accountService;
     private final UtilService utilService;
 
-    public AccountController(){
+    private AccountController(){
         accountService = AccountServiceImpl.getInstance();
         utilService = UtilServiceImpl.getInstance();
     }
@@ -64,7 +67,7 @@ public class AccountController {
     }
 
     public Messenger deleteAccount(Scanner scan) {
-        System.out.println("=== Get Balance ===");
+        System.out.println("=== Delete Account ===");
         System.out.println("Input(Account Number)");
         return accountService.delete(Account.builder()
                 .accountNumber(scan.next())
@@ -72,7 +75,7 @@ public class AccountController {
     }
 
     public String findAccount(Scanner scan) {
-        System.out.println("=== Get Balance ===");
+        System.out.println("=== Find Account ===");
         System.out.println("Input(Account Number)");
         return accountService.getOne(scan.next())
                 .orElse(new Account())

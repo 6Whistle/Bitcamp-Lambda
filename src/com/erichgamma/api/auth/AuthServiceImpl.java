@@ -117,7 +117,7 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
     }
 
     @Override
-    public Optional<Auth> getOne(String id) throws SQLException {
+    public Optional<Auth> getOne(String id){
         return Optional.ofNullable(users.get(id));
     }
 
@@ -133,7 +133,8 @@ public class AuthServiceImpl extends AbstractService<Auth> implements AuthServic
     }
 
     @Override
-    public List<?> findUsers() throws SQLException {
-        return authRepository.findUsers();
+    public List<?> findUsers(){
+        return users.values().stream().toList();
+//        return authRepository.findUsers();
     }
 }

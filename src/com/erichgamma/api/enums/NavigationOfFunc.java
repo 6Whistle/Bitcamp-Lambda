@@ -27,27 +27,15 @@ public enum NavigationOfFunc {
         return "";
     }),
     CRAWLER("crawler", i -> {
-        try {
-            CrawlerView.main(i);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        CrawlerView.main(i);
         return "";
     }),
     POSTS("posts", i -> {
-        try {
-            PostView.main(i);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        PostView.main(i);
         return "";
     }),
     AUTH("auth", i -> {
-        try {
-            AuthView.main(i);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        AuthView.main(i);
         return "";
     }),
     NAVIGATION_ERROR("navigation_error", i -> {
@@ -64,7 +52,7 @@ public enum NavigationOfFunc {
     }
 
     public static Boolean navigate(Scanner scan){
-        System.out.println("exit-Exit, auth-Auth, account-Account, crawler-Crawler, post-Post, user-User");
+        System.out.println("exit-Exit, auth-Auth, account-Account, crawler-Crawler, posts-Post, user-User");
         String str = scan.next();
         return !Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(NAVIGATION_ERROR).function.apply(scan).equals("exit");

@@ -32,7 +32,7 @@ public class PostServiceImpl extends AbstractService<Post> implements PostServic
     }
 
     @Override
-    public List<Post> findAll()  throws SQLException {
+    public List<Post> findAll(){
         return postRepository.findAll();
     }
 

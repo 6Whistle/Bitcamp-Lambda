@@ -2,6 +2,7 @@ package com.erichgamma.api.auth;
 
 
 import com.erichgamma.api.enums.Messenger;
+import lombok.Getter;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -9,8 +10,10 @@ import java.util.Scanner;
 
 public class AuthController {
     AuthServiceImpl auth;
+    @Getter
+    private static final AuthController instance = new AuthController();
 
-    public AuthController() {
+    private AuthController() {
         this.auth = AuthServiceImpl.getInstance();
     }
 
@@ -44,7 +47,7 @@ public class AuthController {
 
     }
 
-    public void findUserByID(Scanner scan) throws SQLException {
+    public void findUserByID(Scanner scan){
         System.out.println("=== ID 검색 ===");
         System.out.println("입력(ID)");
         System.out.println(auth.getOne(scan.next())
@@ -91,7 +94,7 @@ public class AuthController {
         System.out.println(auth.count());
     }
 
-    public void getOne(Scanner scan) throws SQLException {
+    public void getOne(Scanner scan){
         System.out.println("=== ID 검색 ===");
         System.out.println(auth.getOne(scan.next())
                 .orElse(Auth.builder().build())
@@ -103,7 +106,7 @@ public class AuthController {
         return auth.test();
     }
 
-    public List<?> findUsers() throws SQLException {
+    public List<?> findUsers(){
         return auth.findUsers();
     }
 }

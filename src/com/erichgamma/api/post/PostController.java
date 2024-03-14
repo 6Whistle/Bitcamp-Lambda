@@ -13,7 +13,7 @@ public class PostController {
         postService = PostServiceImpl.getInstance();
     }
 
-    public List<?> findAll() throws SQLException {
+    public List<?> findAll(){
         return postService.findAll();
     }
 

@@ -6,7 +6,6 @@ import com.erichgamma.api.crawler.CrawlerView;
 import com.erichgamma.api.post.PostView;
 import com.erichgamma.api.user.UserView;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -26,27 +25,15 @@ public enum Navigation {
         return true;
     }),
     CRAWLER("crawler", i -> {
-        try {
-            CrawlerView.main(i);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        CrawlerView.main(i);
         return true;
     }),
     POSTS("posts", i -> {
-        try {
-            PostView.main(i);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        PostView.main(i);
         return true;
     }),
     AUTH("auth", i -> {
-        try {
-            AuthView.main(i);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        AuthView.main(i);
         return true;
     }),
     NAVIGATION_ERROR("navigation_error", i -> {
@@ -63,7 +50,7 @@ public enum Navigation {
     }
 
     public static Boolean navigate(Scanner scan){
-        System.out.println("exit-Exit, auth-Auth, account-Account, crawler-Crawler, post-Post, user-User");
+        System.out.println("exit-Exit, auth-Auth, account-Account, crawler-Crawler, posts-Post, user-User");
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(NAVIGATION_ERROR).predicate.test(scan);

@@ -3,7 +3,6 @@ package com.erichgamma.api.crawler;
 import com.erichgamma.api.common.AbstractRepository;
 import lombok.Getter;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -21,12 +20,17 @@ public class CrawlerRepository extends AbstractRepository {
     }
 
     @Override
-    public Map<String, ?> save(Map<String, ?> paramMap) throws IOException {
-        Elements elems = Jsoup.connect((String)paramMap.get("url")).timeout(10 * 1000).get()
-                .select((String)paramMap.get("table"));
-        map = paramMap.entrySet().stream()
-                .filter(i->!i.getKey().equals("url") && !i.getKey().equals("table"))
-                .collect(Collectors.toMap(Map.Entry::getKey, j->elems.select((String)j.getValue()).iterator()));
-        return map;
+    public Map<String, ?> save(Map<String, ?> paramMap){
+        try{
+            Elements elems = Jsoup.connect((String)paramMap.get("url")).timeout(10 * 1000).get()
+                    .select((String)paramMap.get("table"));
+            map = paramMap.entrySet().stream()
+                    .filter(i->!i.getKey().equals("url") && !i.getKey().equals("table"))
+                    .collect(Collectors.toMap(Map.Entry::getKey, j->elems.select((String)j.getValue()).iterator()));
+            return map;
+        } catch (IOException e){
+            System.err.println("Error Occurred");
+            return new HashMap<String, Iterator<Element>>();
+        }
     }
 }
