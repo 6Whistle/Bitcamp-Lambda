@@ -1,9 +1,6 @@
 package com.erichgamma.api.item;
 
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ItemTest {
 
