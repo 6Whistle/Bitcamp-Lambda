@@ -1,6 +1,8 @@
 package com.erichgamma.api.enums;
 
 import com.erichgamma.api.auth.AuthController;
+import com.erichgamma.api.menu.Menu;
+import com.erichgamma.api.menu.MenuController;
 
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -60,8 +62,9 @@ public enum AuthRouter {
     }
 
     public static Boolean routing(Scanner scan){
-        System.out.println("[메뉴] exit.종료, join.회원가입, login.로그인, findId.ID 검색, updatePw.비번 변경, \n" +
-                "delete.탈퇴, list.회원목록, searchName.이름 검색, searchJob.직업 검색, count. 회원수");
+        System.out.println("[MENU]");
+        MenuController.getInstance().getMenusByCategory("auth").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
+        System.out.println();
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(ROUTING_ERROR).predicate.test(scan);

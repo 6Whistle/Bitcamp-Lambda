@@ -3,6 +3,8 @@ package com.erichgamma.api.enums;
 import com.erichgamma.api.account.AccountView;
 import com.erichgamma.api.auth.AuthView;
 import com.erichgamma.api.crawler.CrawlerView;
+import com.erichgamma.api.menu.Menu;
+import com.erichgamma.api.menu.MenuController;
 import com.erichgamma.api.post.PostView;
 import com.erichgamma.api.user.UserView;
 import lombok.Getter;
@@ -30,7 +32,7 @@ public enum NavigationOfSup {
         CrawlerView.main(getSCANNER());
         return true;
     }),
-    POSTS("posts", () -> {
+    POSTS("post", () -> {
         PostView.main(getSCANNER());
         return true;
     }),
@@ -54,7 +56,9 @@ public enum NavigationOfSup {
     }
 
     public static Boolean navigate(){
-        System.out.println("exit-Exit, auth-Auth, account-Account, crawler-Crawler, posts-Post, user-User");
+        System.out.println("[MENU]");
+        MenuController.getInstance().getMenusByCategory("navigate").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
+        System.out.println();
         String str = getSCANNER().next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(NAVIGATION_ERROR).supplier.get();

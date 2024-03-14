@@ -1,6 +1,8 @@
 package com.erichgamma.api.enums;
 
 import com.erichgamma.api.account.AccountController;
+import com.erichgamma.api.menu.Menu;
+import com.erichgamma.api.menu.MenuController;
 
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -52,7 +54,9 @@ public enum AccountRouter {
     }
 
     public static Boolean routing(Scanner scan){
-        System.out.println("[Account] 0.Exit, 1.Create, 2.Withdraw, 3.Deposit, 4.Balance, 5.Delete, 6.Find, 7.List");
+        System.out.println("[MENU]");
+        MenuController.getInstance().getMenusByCategory("account").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
+        System.out.println();
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(ROUTING_ERROR).predicate.test(scan);

@@ -1,6 +1,8 @@
 package com.erichgamma.api.enums;
 
 import com.erichgamma.api.crawler.CrawlerController;
+import com.erichgamma.api.menu.Menu;
+import com.erichgamma.api.menu.MenuController;
 
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -31,7 +33,9 @@ public enum CrawlerRouter {
         this.predicate = predicate;
     }
     public static Boolean routing(Scanner scan){
-        System.out.println("[메뉴] 0.종료, 1.벅스뮤직, 2.멜론");
+        System.out.println("[MENU]");
+        MenuController.getInstance().getMenusByCategory("crawler").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
+        System.out.println();
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(ROUTING_ERROR).predicate.test(scan);

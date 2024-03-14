@@ -1,5 +1,7 @@
 package com.erichgamma.api.enums;
 
+import com.erichgamma.api.menu.Menu;
+import com.erichgamma.api.menu.MenuController;
 import com.erichgamma.api.user.UserController;
 
 import java.util.Scanner;
@@ -55,8 +57,9 @@ public enum UserRouter {
     }
 
     public static Boolean routing(Scanner scan){
-        System.out.println("[User] exit(Exit), touch(Make Table), rm(Remove Table), ls(List Table),\n" +
-                "join(Register), login(Login)");
+        System.out.println("[MENU]");
+        MenuController.getInstance().getMenusByCategory("user").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
+        System.out.println();
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(ROUTING_ERROR).predicate.test(scan);
