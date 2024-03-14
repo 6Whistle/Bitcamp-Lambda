@@ -1,4 +1,4 @@
-package product;
+package com.erichgamma.api.product;
 
 import lombok.*;
 

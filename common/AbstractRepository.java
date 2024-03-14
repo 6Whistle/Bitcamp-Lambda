@@ -1,4 +1,4 @@
-package common;
+package com.erichgamma.api.common;
 
 import java.io.IOException;
 import java.util.Map;

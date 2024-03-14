@@ -1,4 +1,4 @@
-package account;
+package com.erichgamma.api.account;
 
 import java.util.Scanner;
 

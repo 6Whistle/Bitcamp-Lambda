@@ -1,4 +1,4 @@
-package crawler;
+package com.erichgamma.api.crawler;
 
 import lombok.Getter;
 

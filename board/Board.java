@@ -1,4 +1,4 @@
-package board;
+package com.erichgamma.api.board;
 
 import lombok.*;
 
@@ -7,15 +7,13 @@ import lombok.*;
 @ToString
 public class Board {
     private Long id;
-    private String title;
-    private String content;
-    private String writer;
+    private String boardName;
+    private String boardType;
 
     @Builder
-    public Board(Long id, String title, String content, String writer){
+    public Board(Long id, String boardName, String boardType){
         this.id = id;
-        this.title = title;
-        this.content = content;
-        this.writer = writer;
+        this.boardName = boardName;
+        this.boardType = boardType;
     }
 }

@@ -1,6 +1,6 @@
-package crawler;
+package com.erichgamma.api.crawler;
 
-import common.AbstractRepository;
+import com.erichgamma.api.common.AbstractRepository;
 import lombok.Getter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

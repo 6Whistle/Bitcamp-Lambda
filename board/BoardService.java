@@ -1,4 +1,4 @@
-package board;
+package com.erichgamma.api.board;
 
 public interface BoardService {
 }

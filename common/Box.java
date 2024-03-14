@@ -1,4 +1,4 @@
-package common;
+package com.erichgamma.api.common;
 
 import java.util.ArrayList;
 import java.util.HashMap;

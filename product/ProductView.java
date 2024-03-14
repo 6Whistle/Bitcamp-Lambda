@@ -1,7 +1,7 @@
-package product;
+package com.erichgamma.api.product;
 
-import common.UtilService;
-import common.UtilServiceImpl;
+import com.erichgamma.api.common.UtilService;
+import com.erichgamma.api.common.UtilServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;

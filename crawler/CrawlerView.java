@@ -1,6 +1,6 @@
-package crawler;
+package com.erichgamma.api.crawler;
 
-import auth.AuthController;
+import com.erichgamma.api.auth.AuthController;
 import org.jsoup.nodes.Element;
 
 import javax.lang.model.util.Elements;

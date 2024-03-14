@@ -1,7 +1,7 @@
-package account;
+package com.erichgamma.api.account;
 
-import common.AbstractService;
-import enums.Messenger;
+import com.erichgamma.api.common.AbstractService;
+import com.erichgamma.api.enums.Messenger;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
                 .filter(i -> i.getAccountNumber().equals(account.getAccountNumber()))
                 .map(i -> "Balance of " + i.getAccountHolder() + " : " + i.getBalance())
                 .findFirst()
-                .orElse("We can't find your account");
+                .orElse("We can't find your com.erichgamma.api.account");
     }
 
 

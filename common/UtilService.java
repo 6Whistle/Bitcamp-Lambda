@@ -1,4 +1,4 @@
-package common;
+package com.erichgamma.api.common;
 
 public interface UtilService {
     int createRandomInt(int begin, int range);

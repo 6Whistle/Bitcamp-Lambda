@@ -1,4 +1,4 @@
-package auth;
+package com.erichgamma.api.auth;
 
 import lombok.*;
 

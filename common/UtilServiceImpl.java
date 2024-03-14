@@ -1,4 +1,4 @@
-package common;
+package com.erichgamma.api.common;
 
 public class UtilServiceImpl implements UtilService {
 

@@ -1,9 +1,9 @@
-package account;
+package com.erichgamma.api.account;
 
 
-import common.UtilService;
-import common.UtilServiceImpl;
-import enums.Messenger;
+import com.erichgamma.api.common.UtilService;
+import com.erichgamma.api.common.UtilServiceImpl;
+import com.erichgamma.api.enums.Messenger;
 
 import java.util.Date;
 import java.util.List;
