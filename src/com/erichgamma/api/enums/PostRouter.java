@@ -1,6 +1,5 @@
 package com.erichgamma.api.enums;
 
-import com.erichgamma.api.menu.Menu;
 import com.erichgamma.api.menu.MenuController;
 import com.erichgamma.api.post.PostController;
 
@@ -9,11 +8,17 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public enum PostRouter {
-    EXIT("0", scanner -> {
+    POST_EXIT("x", scanner -> {
         System.out.println("EXIT");
         return false;
     }),
-    BOARD("1", scanner -> {
+    POST_MAKE_TABLE("mk", scanner -> {
+        return true;
+    }),
+    POST_REMOVE_TABLE("rm-r", scanner -> {
+        return true;
+    }),
+    POST_LIST("ls-a", scanner -> {
         PostController.getInstance().findAll().forEach(System.out::println);
         return true;
     }),
@@ -30,9 +35,7 @@ public enum PostRouter {
     }
 
     public static Boolean routing(Scanner scan){
-        System.out.println("[MENU]");
-        MenuController.getInstance().getMenusByCategory("post").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
-        System.out.println();
+        MenuController.getInstance().printMenusByCategory("post");
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(ROUTING_ERROR).predicate.test(scan);

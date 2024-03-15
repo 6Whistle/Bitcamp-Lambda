@@ -51,7 +51,7 @@ public class AuthController {
         System.out.println("=== ID 검색 ===");
         System.out.println("입력(ID)");
         System.out.println(auth.getOne(scan.next())
-                .orElse(Auth.builder().build()).toString());
+                .orElseGet(() -> Auth.builder().build()).toString());
     }
 
     public Messenger updatePassword(Scanner scan) {

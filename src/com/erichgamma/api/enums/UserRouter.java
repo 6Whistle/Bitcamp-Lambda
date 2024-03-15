@@ -1,6 +1,5 @@
 package com.erichgamma.api.enums;
 
-import com.erichgamma.api.menu.Menu;
 import com.erichgamma.api.menu.MenuController;
 import com.erichgamma.api.user.UserController;
 
@@ -9,37 +8,37 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public enum UserRouter {
-    EXIT("exit", (scanner) -> {
+    USER_EXIT("x", (scanner) -> {
         System.out.println("EXIT");
         return false;
     }),
-    MAKE_TABLE("touch", (scanner) -> {
+    USER_MAKE_TABLE("mk", (scanner) -> {
         System.out.println("=== Make User Table ===");
         System.out.println("result : " + UserController.getInstance().makeTable());
         System.out.println("========================");
         return true;
     }),
-    REMOVE_TABLE("rm", (scanner) -> {
+    USER_REMOVE_TABLE("rm-r", (scanner) -> {
         System.out.println("=== Remove User Table ===");
         System.out.println("result : " + UserController.getInstance().removeTable());
         System.out.println("========================");
         return true;
     }),
-    LIST("ls", (scanner) -> {
+    USER_LIST("ls-a", (scanner) -> {
         System.out.println("=== User List ===");
         UserController.getInstance().findAll().forEach(System.out::println);
         System.out.println("========================");
         return true;
     }),
-    LOGIN("login", (scanner) -> {
-        System.out.println("=== List User Table ===");
-        System.out.println("result : " + UserController.getInstance().login(scanner));
+    USER_JOIN("joi", (scanner) -> {
+        System.out.println("======= Register =======");
+        System.out.println("result : " + UserController.getInstance().join(scanner));
         System.out.println("========================");
         return true;
     }),
-    JOIN("join", (scanner) -> {
-        System.out.println("======= Register =======");
-        System.out.println("result : " + UserController.getInstance().join(scanner));
+    USER_LOGIN("log", (scanner) -> {
+        System.out.println("=== List User Table ===");
+        System.out.println("result : " + UserController.getInstance().login(scanner));
         System.out.println("========================");
         return true;
     }),
@@ -57,9 +56,7 @@ public enum UserRouter {
     }
 
     public static Boolean routing(Scanner scan){
-        System.out.println("[MENU]");
-        MenuController.getInstance().getMenusByCategory("user").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
-        System.out.println();
+        MenuController.getInstance().printMenusByCategory("user");
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(ROUTING_ERROR).predicate.test(scan);

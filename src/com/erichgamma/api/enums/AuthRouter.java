@@ -9,43 +9,43 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public enum AuthRouter {
-    EXIT("exit", scanner -> {
+    AUTH_EXIT("x", scanner -> {
         System.out.println("EXIT");
         return false;
     }),
-    JOIN("join", scanner -> {
+    AUTH_JOIN("joi", scanner -> {
         AuthController.getInstance().join(scanner);
         return true;
     }),
-    LOGIN("login", scanner -> {
+    AUTH_LOGIN("log", scanner -> {
         AuthController.getInstance().login(scanner);
         return true;
     }),
-    FIND_ID("findId", scanner -> {
+    AUTH_FIND_ID("cat", scanner -> {
         AuthController.getInstance().findUserByID(scanner);
         return true;
     }),
-    UPDATE_PW("updatePw", scanner -> {
+    AUTH_UPDATE_PW("ch-p", scanner -> {
         AuthController.getInstance().updatePassword(scanner);
         return true;
     }),
-    DELETE("delete", scanner -> {
+    AUTH_DELETE("rm", scanner -> {
         AuthController.getInstance().deleteUser(scanner);
         return true;
     }),
-    AUTH_LIST("list", scanner -> {
+    AUTH_LIST("ls-a", scanner -> {
         AuthController.getInstance().findUsers().forEach(System.out::println);
         return true;
     }),
-    SEARCH_NAME("searchName", scanner -> {
+    AUTH_SEARCH_NAME("ls-n", scanner -> {
         AuthController.getInstance().findUsersByName(scanner);
         return true;
     }),
-    SEARCH_JOB("searchJob", scanner -> {
+    AUTH_SEARCH_JOB("ls-j", scanner -> {
         AuthController.getInstance().findUsersByJob(scanner);
         return true;
     }),
-    AUTH_COUNT("count", scanner -> {
+    AUTH_COUNT("cnt", scanner -> {
         AuthController.getInstance().countUsers();
         return true;
     }),
@@ -62,9 +62,7 @@ public enum AuthRouter {
     }
 
     public static Boolean routing(Scanner scan){
-        System.out.println("[MENU]");
-        MenuController.getInstance().getMenusByCategory("auth").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
-        System.out.println();
+        MenuController.getInstance().printMenusByCategory("auth");
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(ROUTING_ERROR).predicate.test(scan);

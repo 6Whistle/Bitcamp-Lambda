@@ -31,15 +31,33 @@ public class MenuServiceImpl implements MenuService{
         return menuRepository.getMenusByCategory(category);
     }
 
+    /**
+     * 공통 메뉴 명령어 정의
+     * x means 'Exit'
+     * mk means 'Create Table'
+     * cat means 'Find The One'
+     * touch means 'Insert One'
+     * ch-* means 'Change What'
+     * rm means 'Delete Row'
+     * ls-a means 'All List'
+     * ls-n means 'Find By Name'
+     * ls-* means 'Something List'
+     * cnt means 'Count'
+     * 이 외에 일상적이 아닌 단어는 약어 사용
+     * withdraw -> with
+     * deposit -> depo
+     * balance -> bal
+     * */
     private void insertMenus(){
-        String[] categories = {"navigate", "auth", "account", "crawler", "post", "user", "soccer"};
-        String[][] menus = {{"exit-Exit", "auth-Auth", "account-Account", "crawler-Crawler", "post-Post", "user-User"},
-                            {"exit-종료", "join-회원가입", "login-로그인", "findId-ID 검색", "updatePw-PW 변경", "delete-탈퇴", "list-회원목록", "searchName-이름 검색", "searchJob-직업 검색", "count-회원수"},
-                            {"0-Exit", "1-Create", "2-Withdraw", "3-Deposit", "4-Balance", "5-Delete", "6-Find", "7-List"},
-                            {"0-종료", "1-벅스뮤직", "2-멜론"},
-                            {"0-Exit", "1-Board"},
-                            {"exit-Exit", "touch-Make Table", "rm-Remove Table", "ls-List Table", "join-Register", "login-Login"},
-                            {}};
+        String[] categories = {"navigate", "account", "auth", "crawler", "post", "user", "soccer"};
+        String[][] menus = {{"x :Exit", "ath :Auth", "acc :Account", "cwl :Crawler", "pst :Post", "usr :User", "scr :Soccer"},
+                            {"x :Exit", "mk :Make Table", "rm-r :Remove Table", "touch :Create", "rm :Delete", "wdw :Withdraw", "dps :Deposit", "bal :Balance", "cat :Find", "ls-a :List"},
+                            {"x :Exit", "joi :Join", "log :Login", "cat :Find ID", "ch-p :Change PW", "rm :Secession", "ls-a :Auth List", "ls-n :Search Name", "ls-j :Find Job", "cnt :Count Auth"},
+                            {"x :Exit", "bugs :Bugs Music", "mellon :Mellon Music"},
+                            {"x :Exit", "mk :Make Table", "rm-r :Remove Table", "ls-a :Posts"},
+                            {"x :Exit", "mk :Make Table", "rm-r :Remove Table", "ls-a :List Table", "joi :Register", "log :Login"},
+                            {"x :Exit", "mk :Make Table", "rm-r :Remove Table"}
+                            };
 
         for(int i = 0; i < menus.length; i++)
             for(int j = 0; j < menus[i].length; j++)

@@ -9,35 +9,41 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public enum AccountRouter {
-    EXIT("0", scanner -> {
+    ACCOUNT_EXIT("x", scanner -> {
         System.out.println("EXIT");
         return false;
     }),
-    CREATE("1", scanner -> {
+    ACCOUNT_MAKE_TABLE("mk", scanner -> {
+        return true;
+    }),
+    ACCOUNT_REMOVE_TABLE("rm-r", scanner -> {
+        return true;
+    }),
+    ACCOUNT_CREATE("touch", scanner -> {
         System.out.println(AccountController.getInstance().creatAccount(scanner));
         return true;
     }),
-    WITHDRAW("2", scanner -> {
-        System.out.println(AccountController.getInstance().withdraw(scanner));
-        return true;
-    }),
-    DEPOSIT("3", scanner -> {
-        System.out.println(AccountController.getInstance().deposit(scanner));
-        return true;
-    }),
-    BALANCE("4", scanner -> {
-        System.out.println(AccountController.getInstance().getBalance(scanner));
-        return true;
-    }),
-    DELETE_ACCOUNT("5", scanner -> {
+    ACCOUNT_DELETE("rm", scanner -> {
         System.out.println(AccountController.getInstance().deleteAccount(scanner));
         return true;
     }),
-    FIND_ACCOUNT("6", scanner -> {
+    ACCOUNT_WITHDRAW("wdw", scanner -> {
+        System.out.println(AccountController.getInstance().withdraw(scanner));
+        return true;
+    }),
+    ACCOUNT_DEPOSIT("dps", scanner -> {
+        System.out.println(AccountController.getInstance().deposit(scanner));
+        return true;
+    }),
+    ACCOUNT_BALANCE("bal", scanner -> {
+        System.out.println(AccountController.getInstance().getBalance(scanner));
+        return true;
+    }),
+    ACCOUNT_FIND("cat", scanner -> {
         System.out.println(AccountController.getInstance().findAccount(scanner));
         return true;
     }),
-    ACCOUNT_LIST("7", scanner -> {
+    ACCOUNT_LIST("ls-a", scanner -> {
         System.out.println(AccountController.getInstance().getAccountsList());
         return true;
     }),
@@ -54,9 +60,7 @@ public enum AccountRouter {
     }
 
     public static Boolean routing(Scanner scan){
-        System.out.println("[MENU]");
-        MenuController.getInstance().getMenusByCategory("account").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
-        System.out.println();
+        MenuController.getInstance().printMenusByCategory("account");
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(ROUTING_ERROR).predicate.test(scan);

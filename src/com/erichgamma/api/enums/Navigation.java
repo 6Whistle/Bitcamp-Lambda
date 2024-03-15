@@ -3,39 +3,40 @@ package com.erichgamma.api.enums;
 import com.erichgamma.api.account.AccountView;
 import com.erichgamma.api.auth.AuthView;
 import com.erichgamma.api.crawler.CrawlerView;
-import com.erichgamma.api.menu.Menu;
 import com.erichgamma.api.menu.MenuController;
 import com.erichgamma.api.post.PostView;
 import com.erichgamma.api.user.UserView;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public enum Navigation {
-    EXIT("exit", i -> {
+    EXIT("x", i -> {
         System.out.println("EXIT");
         return false;
     }),
-    USER("user", i -> {
-        UserView.main(i);
-        return true;
-    }),
-    ACCOUNT("account", i -> {
+    ACCOUNT("acc", i -> {
         AccountView.main(i);
         return true;
     }),
-    CRAWLER("crawler", i -> {
+    AUTH("ath", i -> {
+        AuthView.main(i);
+        return true;
+    }),
+    CRAWLER("cwl", i -> {
         CrawlerView.main(i);
         return true;
     }),
-    POSTS("post", i -> {
+    POST("pst", i -> {
         PostView.main(i);
         return true;
     }),
-    AUTH("auth", i -> {
-        AuthView.main(i);
+    USER("usr", i -> {
+        UserView.main(i);
+        return true;
+    }),
+    SOCCER("scr", i -> {
         return true;
     }),
     NAVIGATION_ERROR("navigation_error", i -> {
@@ -52,9 +53,7 @@ public enum Navigation {
     }
 
     public static Boolean navigate(Scanner scan){
-        System.out.println("[MENU]");
-        MenuController.getInstance().getMenusByCategory("navigate").forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
-        System.out.println();
+        MenuController.getInstance().printMenusByCategory("navigate");
         String str = scan.next();
         return Stream.of(values()).filter(i -> i.name.equals(str))
                 .findAny().orElse(NAVIGATION_ERROR).predicate.test(scan);

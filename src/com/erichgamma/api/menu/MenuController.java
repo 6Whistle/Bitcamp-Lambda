@@ -24,4 +24,10 @@ public class MenuController {
     public List<?> getMenusByCategory(String category){
         return menuService.getMenusByCategory(category);
     }
+
+    public void printMenusByCategory(String category){
+        System.out.println("[" + category + "]");
+        menuService.getMenusByCategory(category).forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
+        System.out.println();
+    }
 }
