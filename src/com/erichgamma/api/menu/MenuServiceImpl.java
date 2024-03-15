@@ -16,9 +16,7 @@ public class MenuServiceImpl implements MenuService{
 
     @Override
     public Messenger makeMenuTable(){
-        menuRepository.makeTable();
-        this.insertMenus();
-        return Messenger.SUCCESS;
+        return menuRepository.makeTable();
     }
 
     @Override
@@ -48,7 +46,8 @@ public class MenuServiceImpl implements MenuService{
      * deposit -> depo
      * balance -> bal
      * */
-    private void insertMenus(){
+    @Override
+    public Messenger insertMenus(){
         String[] categories = {"navigate", "account", "auth", "crawler", "post", "user", "soccer"};
         String[][] menus = {{"x :Exit", "ath :Auth", "acc :Account", "cwl :Crawler", "pst :Post", "usr :User", "scr :Soccer"},
                             {"x :Exit", "mk :Make Table", "rm-r :Remove Table", "touch :Create", "rm :Delete", "wdw :Withdraw", "dps :Deposit", "bal :Balance", "cat :Find", "ls-a :List"},
@@ -59,8 +58,8 @@ public class MenuServiceImpl implements MenuService{
                             {"x :Exit", "mk :Make Table", "rm-r :Remove Table"}
                             };
 
-        for(int i = 0; i < menus.length; i++)
-            for(int j = 0; j < menus[i].length; j++)
-                menuRepository.insertMenu(Menu.builder().category(categories[i]).item(menus[i][j]).build());
+        for(int i = 0; i < menus.length; i++)   for(int j = 0; j < menus[i].length; j++)
+            menuRepository.insertMenu(Menu.builder().category(categories[i]).item(menus[i][j]).build());
+        return Messenger.SUCCESS;
     }
 }

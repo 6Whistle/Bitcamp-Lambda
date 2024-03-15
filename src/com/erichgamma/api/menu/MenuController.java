@@ -3,7 +3,6 @@ package com.erichgamma.api.menu;
 import com.erichgamma.api.enums.Messenger;
 import lombok.Getter;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class MenuController {
@@ -15,7 +14,9 @@ public class MenuController {
     }
 
     public Messenger makeMenuTable(){
-        return menuService.makeMenuTable();
+        return menuService.makeMenuTable() == Messenger.SUCCESS
+                ? menuService.insertMenus()
+                : Messenger.FAIL;
     }
     public Messenger removeMenuTable(){
         return menuService.removeTable();
@@ -27,7 +28,7 @@ public class MenuController {
 
     public void printMenusByCategory(String category){
         System.out.println("[" + category + "]");
-        menuService.getMenusByCategory(category).forEach(i -> System.out.print(((Menu)i).getItem() + ", "));
+        menuService.getMenusByCategory(category).forEach(i -> System.out.print(((Menu)i).getItem() + "  "));
         System.out.println();
     }
 }

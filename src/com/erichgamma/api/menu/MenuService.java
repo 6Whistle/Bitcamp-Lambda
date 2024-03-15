@@ -11,4 +11,6 @@ public interface MenuService {
     Messenger removeTable();
 
     List<?> getMenusByCategory(String category);
+
+    Messenger insertMenus();
 }

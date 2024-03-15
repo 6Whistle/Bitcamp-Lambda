@@ -6,8 +6,6 @@ import com.erichgamma.api.enums.NavigationOfFunc;
 import com.erichgamma.api.enums.NavigationOfSup;
 import com.erichgamma.api.menu.MenuController;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
@@ -16,7 +14,7 @@ public class Main {
 //    public static void main(String[] args) throws IOException, SQLException {   while(NavigationOfCons.navigate(scan));   }
 //    public static void main(String[] args) throws IOException, SQLException {   while(NavigationOfFunc.navigate(scan));   }
 //    public static void main(String[] args) throws IOException, SQLException {   while(NavigationOfSup.navigate());   }
-    public static void main(String[] args) throws IOException, SQLException {
+    public static void main(String[] args) {
         MenuController.getInstance().removeMenuTable();
         MenuController.getInstance().makeMenuTable();
         while(Navigation.navigate(scan));

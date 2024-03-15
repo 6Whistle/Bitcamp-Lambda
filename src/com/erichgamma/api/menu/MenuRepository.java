@@ -39,7 +39,7 @@ public class MenuRepository {
                 "item VARCHAR(20) NOT NULL)";
         try {
             pstmt = conn.prepareStatement(sql);
-            return pstmt.executeUpdate() >= 0 ? Messenger.SUCCESS : Messenger.FAIL;
+            return pstmt.executeUpdate() == 0 ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e){
             System.err.println("SQL Exception Occurred");
             return Messenger.SQL_ERROR;
@@ -50,7 +50,7 @@ public class MenuRepository {
         String sql = "DROP TABLE IF EXISTS menus";
         try {
             pstmt = conn.prepareStatement(sql);
-            return pstmt.executeUpdate() >= 0 ? Messenger.SUCCESS : Messenger.FAIL;
+            return pstmt.executeUpdate() == 0 ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e){
             System.err.println("SQL Exception Occurred");
             return Messenger.SQL_ERROR;
@@ -63,15 +63,15 @@ public class MenuRepository {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, menu.getCategory());
             pstmt.setString(2, menu.getItem());
-            return pstmt.executeUpdate() >= 0 ? Messenger.SUCCESS : Messenger.FAIL;
+            return pstmt.executeUpdate() == 1 ? Messenger.SUCCESS : Messenger.FAIL;
         } catch (SQLException e){
-            System.err.println("SQL Exception Occurred :" + menu.getCategory() + " " + menu.getItem());
+            System.err.println("SQL Exception Occurred :" + e.getMessage());
             return Messenger.SQL_ERROR;
         }
     }
 
     public List<?> getMenusByCategory(String category){
-        String sql = "SELECT m.item FROM menus m WHERE category = ?";
+        String sql = "SELECT m.item FROM menus m WHERE m.category = ?";
         List<Menu> menus = new ArrayList<>();
         try {
             pstmt = conn.prepareStatement(sql);

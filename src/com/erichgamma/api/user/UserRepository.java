@@ -135,6 +135,7 @@ public class UserRepository {
 
     public Messenger login(User user) {
         String sql = "SELECT username FROM users WHERE username=? AND password=?";
+
         try{
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user.getUsername());
@@ -146,4 +147,6 @@ public class UserRepository {
             return Messenger.SQL_ERROR;
         }
     }
+
+
 }
